@@ -51,7 +51,7 @@ class Key {
     return false;
   }
 }
-//-------------------------------------------------------------------------
+//----------------------------------------------------------------------
 Key.insertTextareaAndKeyboardDivToDOM();
 
 const keyboardDiv = document.querySelector('.keyboard__keys');
@@ -499,9 +499,9 @@ const keysValuesArr = [
   },
 ];
 const textarea = document.querySelector('textarea');
-// const textareaCaretPosition = textarea.selectionStart;
-
 const keysArr = [];
+let isPressingOnShift = false;
+
 keysValuesArr.forEach((item) => {
   keysArr.unshift(new Key(item.eventCode, item.rusChar,
     item.rusCharShift, item.engChar, item.engCharShift));
@@ -519,7 +519,6 @@ function clearDOM() {
 }
 
 insertKeysToDOM();
-
 
 function capsLockToggle() {
   keysArr.forEach((object) => {
@@ -597,6 +596,8 @@ keyboardDiv.addEventListener('click', (event) => {
     if (event.target.id === 'ControlLeft'
         || event.target.id === 'MetaLeft'
         || event.target.id === 'ControlRight'
+        || event.target.id === 'ShiftLeft'
+        || event.target.id === 'ShiftRight'
         || event.target.id === 'Alt') { break; }
     if (event.target.id === 'ArrowUp') {
       textarea.focus();
@@ -628,6 +629,28 @@ keyboardDiv.addEventListener('click', (event) => {
       textarea.value = textareaValueArr.join('');
       textarea.focus();
       textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+    }
+  }
+});
+keyboardDiv.addEventListener('mousedown', (event) => {
+  for (const object of keysArr) {
+    if (event.target.id === 'ShiftLeft' || event.target.id === 'ShiftRight') {
+      isPressingOnShift = true;
+      capsLockToggle();
+      clearDOM();
+      insertKeysToDOM();
+      break;
+    }
+  }
+});
+keyboardDiv.addEventListener('mouseup', (event) => {
+  for (const object of keysArr) {
+    if (isPressingOnShift === true) {
+      isPressingOnShift = false;
+      capsLockToggle();
+      clearDOM();
+      insertKeysToDOM();
+      break;
     }
   }
 });
