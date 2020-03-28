@@ -515,7 +515,9 @@ function insertKeysToDOM() {
 
 function clearDOM() {
   const buttons = document.querySelectorAll('button');
+  const brs = document.querySelectorAll('br');
   buttons.forEach((button) => { button.remove(); });
+  brs.forEach((br) => { br.remove(); });
 }
 
 insertKeysToDOM();
