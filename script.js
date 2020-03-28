@@ -537,11 +537,23 @@ function capsLockToggle() {
   });
 }
 
+function languageToggle() {
+  keysArr.forEach((object) => {
+    switch (object.currentChar) {
+      case object.engChar: object.currentChar = object.rusChar;
+        break;
+      case object.engCharShift: object.currentChar = object.rusCharShift;
+        break;
+      case object.rusChar: object.currentChar = object.engChar;
+        break;
+      case object.rusCharShift: object.currentChar = object.engCharShift;
+        break;
+      default: return false;
+    }
+  });
+}
 
 keyboardDiv.addEventListener('click', (event) => {
-  // console.log((textarea.value).split('').splice(
-  //        3, 0, "l",
-  //       ));
   for (const object of keysArr) {
     if (event.target.id === 'CapsLock') {
       capsLockToggle();
@@ -549,16 +561,45 @@ keyboardDiv.addEventListener('click', (event) => {
       insertKeysToDOM();
       break;
     }
-    if (event.target.id === 'Tab') {
-      textarea.value += '    ';
+    if (event.target.id === 'ContextMenu') {
+      languageToggle();
+      clearDOM();
+      insertKeysToDOM();
       break;
     }
+    if (event.target.id === 'Tab') {
+      const textareaValueArr = (textarea.value).split('');
+      const caretPosition = textarea.selectionStart;
+      textareaValueArr.splice(caretPosition, 0, '    ');
+      textarea.value = textareaValueArr.join('');
+      textarea.focus();
+      textarea.setSelectionRange(caretPosition + 4, caretPosition + 4);
+      break;
+    }
+    if (event.target.id === 'Backspace') {
+      const textareaValueArr = (textarea.value).split('');
+      const caretPosition = textarea.selectionStart;
+      textareaValueArr.splice(caretPosition - 1, 1);
+      textarea.value = textareaValueArr.join('');
+      textarea.focus();
+      textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
+      break;
+    }
+    if (event.target.id === 'Enter') {
+      const textareaValueArr = (textarea.value).split('');
+      const caretPosition = textarea.selectionStart;
+      textareaValueArr.splice(caretPosition, 0, '\n');
+      textarea.value = textareaValueArr.join('');
+      textarea.focus();
+      textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+      break;
+    }
+    if (event.target.id === 'ControlLeft'
+        || event.target.id === 'MetaLeft'
+        || event.target.id === 'ControlRight'
+        || event.target.id === 'Alt') break;
 
 
-    // if (event.target.id === 'Backspace') {
-    //   textarea.value = ;
-    //   break;
-    // }
 
     if (object.isEventTarget(event.target.id)) {
       const textareaValueArr = (textarea.value).split('');
