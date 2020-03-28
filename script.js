@@ -597,10 +597,30 @@ keyboardDiv.addEventListener('click', (event) => {
     if (event.target.id === 'ControlLeft'
         || event.target.id === 'MetaLeft'
         || event.target.id === 'ControlRight'
-        || event.target.id === 'Alt') break;
-
-
-
+        || event.target.id === 'Alt') { break; }
+    if (event.target.id === 'ArrowUp') {
+      textarea.focus();
+      textarea.setSelectionRange(0, 0);
+      break;
+    }
+    if (event.target.id === 'ArrowDown') {
+      const textareaValueLength = (textarea.value).length;
+      textarea.focus();
+      textarea.setSelectionRange(textareaValueLength, textareaValueLength);
+      break;
+    }
+    if (event.target.id === 'ArrowLeft') {
+      const caretPosition = textarea.selectionStart;
+      textarea.focus();
+      textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
+      break;
+    }
+    if (event.target.id === 'ArrowRight') {
+      const caretPosition = textarea.selectionStart;
+      textarea.focus();
+      textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+      break;
+    }
     if (object.isEventTarget(event.target.id)) {
       const textareaValueArr = (textarea.value).split('');
       const caretPosition = textarea.selectionStart;
