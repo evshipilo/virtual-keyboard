@@ -50,11 +50,6 @@ class Key {
     if (eventTargetId === this.eventCode) return true;
     return false;
   }
-//
-//
-//   static typeToTextareaFromVirtualKeys() {
-//     const eventTarget=
-//   }
 }
 //-------------------------------------------------------------------------
 Key.insertTextareaAndKeyboardDivToDOM();
@@ -462,10 +457,10 @@ const keysValuesArr = [
   },
   {
     eventCode: 'Space',
-    rusChar: '',
-    rusCharShift: '',
-    engChar: '',
-    engCharShift: '',
+    rusChar: ' ',
+    rusCharShift: ' ',
+    engChar: ' ',
+    engCharShift: ' ',
   },
   {
     eventCode: 'ContextMenu',
@@ -513,12 +508,13 @@ keysValuesArr.forEach((item) => {
 keysArr.forEach((object) => {
   object.insertKeyToDOM();
 });
-let textAreaValue = '';
+
 const keyboardDiv = document.querySelector('.keyboard__keys');
 
 keyboardDiv.addEventListener('click', (event) => {
   keysArr.forEach((object) => {
-    if (object.isEventTarget(event.target.id)) textAreaValue += object.currentChar;
-    document.querySelector('textarea').value = textAreaValue;
+    if (object.isEventTarget(event.target.id)) {
+      document.querySelector('textarea').value += object.currentChar;
+    }
   });
 });
