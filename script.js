@@ -54,7 +54,7 @@ class Key {
 //-------------------------------------------------------------------------
 Key.insertTextareaAndKeyboardDivToDOM();
 
-
+const keyboardDiv = document.querySelector('.keyboard__keys');
 const keysValuesArr = [
   {
     eventCode: 'Backquote',
@@ -498,6 +498,8 @@ const keysValuesArr = [
     engCharShift: 'ᐅ',
   },
 ];
+const textarea = document.querySelector('textarea');
+// const textareaCaretPosition = textarea.selectionStart;
 
 const keysArr = [];
 keysValuesArr.forEach((item) => {
@@ -505,16 +507,66 @@ keysValuesArr.forEach((item) => {
     item.rusCharShift, item.engChar, item.engCharShift));
 });
 
-keysArr.forEach((object) => {
-  object.insertKeyToDOM();
-});
-
-const keyboardDiv = document.querySelector('.keyboard__keys');
-
-keyboardDiv.addEventListener('click', (event) => {
+function insertKeysToDOM() {
   keysArr.forEach((object) => {
-    if (object.isEventTarget(event.target.id)) {
-      document.querySelector('textarea').value += object.currentChar;
+    object.insertKeyToDOM();
+  });
+}
+
+function clearDOM() {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((button) => { button.remove(); });
+}
+
+insertKeysToDOM();
+
+
+function capsLockToggle() {
+  keysArr.forEach((object) => {
+    switch (object.currentChar) {
+      case object.engChar: object.currentChar = object.engCharShift;
+        break;
+      case object.engCharShift: object.currentChar = object.engChar;
+        break;
+      case object.rusChar: object.currentChar = object.rusCharShift;
+        break;
+      case object.rusCharShift: object.currentChar = object.rusChar;
+        break;
+      default: return false;
     }
   });
+}
+
+
+keyboardDiv.addEventListener('click', (event) => {
+  // console.log((textarea.value).split('').splice(
+  //        3, 0, "l",
+  //       ));
+  for (const object of keysArr) {
+    if (event.target.id === 'CapsLock') {
+      capsLockToggle();
+      clearDOM();
+      insertKeysToDOM();
+      break;
+    }
+    if (event.target.id === 'Tab') {
+      textarea.value += '    ';
+      break;
+    }
+
+
+    // if (event.target.id === 'Backspace') {
+    //   textarea.value = ;
+    //   break;
+    // }
+
+    if (object.isEventTarget(event.target.id)) {
+      const textareaValueArr = (textarea.value).split('');
+      const caretPosition = textarea.selectionStart;
+      textareaValueArr.splice(caretPosition, 0, object.currentChar);
+      textarea.value = textareaValueArr.join('');
+      textarea.focus();
+      textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+    }
+  }
 });
