@@ -10,35 +10,6 @@
   font-weight: 400;
   font-style: normal;
 }
-@font-face {
-  font-family: "Material Icons";
-  font-style: normal;
-  font-weight: 400;
-  src: url("assets/MaterialIcons-Regular.ttf") format("truetype");
-}
-.material-icons {
-  font-family: "Material Icons";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2rem;
-  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-  /* Support for IE. */
-  font-feature-settings: "liga";
-}
-
 html {
   font-family: "Roboto", sans-serif;
   font-size: 10px;
@@ -46,7 +17,7 @@ html {
 
 textarea {
   height: 30vh;
-  width: 80vw;
+  width: 79.5vw;
   margin-left: 10vw;
   font-size: 2rem;
 }
@@ -96,6 +67,10 @@ textarea:focus {
 .keyboard__key--extra-wide {
   width: 30%;
   max-width: 310px;
+}
+
+.keyboard__key--active {
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /*# sourceMappingURL=style.css.map */

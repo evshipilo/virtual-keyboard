@@ -32,9 +32,9 @@ class Key {
 
   addEndOfRow() {
     if (this.eventCode === 'Backspace'
-      || this.eventCode === 'Backslash'
-      || this.eventCode === 'Enter'
-      || this.eventCode === 'ShiftRight') return '<br>';
+        || this.eventCode === 'Backslash'
+        || this.eventCode === 'Enter'
+        || this.eventCode === 'ShiftRight') return '<br>';
     return '';
   }
 
@@ -51,6 +51,7 @@ class Key {
     return false;
   }
 }
+
 //----------------------------------------------------------------------
 Key.insertTextareaAndKeyboardDivToDOM();
 
@@ -655,4 +656,134 @@ keyboardDiv.addEventListener('mouseup', (event) => {
       break;
     }
   }
+});
+//--------------------------------------------------------------
+document.addEventListener('keydown', (event) => {
+  textarea.focus();
+  for (const object of keysArr) {
+    if (event.code === object.eventCode) {
+      document.getElementById(event.code).classList.add('keyboard__key--active');
+      break;
+    }
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  for (const object of keysArr) {
+    if (event.code === object.eventCode) {
+      document.getElementById(event.code).classList.remove('keyboard__key--active');
+      break;
+    }
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.code !== 'ContextMenu'
+    && event.code !== 'Backspace'
+    && event.code !== 'Enter'
+    && event.code !== 'Tab'
+    && event.code !== 'ControlLeft'
+    && event.code !== 'ControlRight'
+    && event.code !== 'ShiftLeft'
+    && event.code !== 'ShiftRight'
+    && event.code !== 'MetaLeft'
+    && event.code !== 'Alt'
+    && event.code !== 'ArrowDown'
+    && event.code !== 'ArrowUp'
+    && event.code !== 'ArrowLeft'
+    && event.code !== 'ArrowRight'
+  ) {
+    for (const object of keysArr) {
+      if (event.code === 'CapsLock') {
+        capsLockToggle();
+        clearDOM();
+        insertKeysToDOM();
+        break;
+      }
+      if (event.code === object.eventCode) {
+        event.preventDefault();
+        const textareaValueArr = (textarea.value).split('');
+        const caretPosition = textarea.selectionStart;
+        textareaValueArr.splice(caretPosition, 0, object.currentChar);
+        textarea.value = textareaValueArr.join('');
+        textarea.focus();
+        textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+        break;
+      }
+    }
+  }
+
+
+  //
+  //   if (event.code === 'ContextMenu') {
+  //     languageToggle();
+  //     clearDOM();
+  //     insertKeysToDOM();
+  //     break;
+  //   }
+  //   if (event.code === 'Tab') {
+  //     const textareaValueArr = (textarea.value).split('');
+  //     const caretPosition = textarea.selectionStart;
+  //     textareaValueArr.splice(caretPosition, 0, '    ');
+  //     textarea.value = textareaValueArr.join('');
+  //     textarea.focus();
+  //     textarea.setSelectionRange(caretPosition + 4, caretPosition + 4);
+  //     break;
+  //   }
+  //   if (event.target.id === 'Backspace') {
+  //     const textareaValueArr = (textarea.value).split('');
+  //     const caretPosition = textarea.selectionStart;
+  //     textareaValueArr.splice(caretPosition - 1, 1);
+  //     textarea.value = textareaValueArr.join('');
+  //     textarea.focus();
+  //     textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
+  //     break;
+  //   }
+  //   if (event.target.id === 'Enter') {
+  //     const textareaValueArr = (textarea.value).split('');
+  //     const caretPosition = textarea.selectionStart;
+  //     textareaValueArr.splice(caretPosition, 0, '\n');
+  //     textarea.value = textareaValueArr.join('');
+  //     textarea.focus();
+  //     textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+  //     break;
+  //   }
+  //   if (event.target.id === 'ControlLeft'
+  //       || event.target.id === 'MetaLeft'
+  //       || event.target.id === 'ControlRight'
+  //       || event.target.id === 'ShiftLeft'
+  //       || event.target.id === 'ShiftRight'
+  //       || event.target.id === 'Alt') { break; }
+  //   if (event.target.id === 'ArrowUp') {
+  //     textarea.focus();
+  //     textarea.setSelectionRange(0, 0);
+  //     break;
+  //   }
+  //   if (event.target.id === 'ArrowDown') {
+  //     const textareaValueLength = (textarea.value).length;
+  //     textarea.focus();
+  //     textarea.setSelectionRange(textareaValueLength, textareaValueLength);
+  //     break;
+  //   }
+  //   if (event.target.id === 'ArrowLeft') {
+  //     const caretPosition = textarea.selectionStart;
+  //     textarea.focus();
+  //     textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
+  //     break;
+  //   }
+  //   if (event.target.id === 'ArrowRight') {
+  //     const caretPosition = textarea.selectionStart;
+  //     textarea.focus();
+  //     textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+  //     break;
+  //   }
+  //   if (object.isEventTarget(event.target.id)) {
+  //     const textareaValueArr = (textarea.value).split('');
+  //     const caretPosition = textarea.selectionStart;
+  //     textareaValueArr.splice(caretPosition, 0, object.currentChar);
+  //     textarea.value = textareaValueArr.join('');
+  //     textarea.focus();
+  //     textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
+  //   }
+  // }
 });
