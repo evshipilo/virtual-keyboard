@@ -502,6 +502,7 @@ const keysValuesArr = [
 const textarea = document.querySelector('textarea');
 const keysArr = [];
 let isPressingOnShift = false;
+let isPressingOnShiftFizic = false;
 
 keysValuesArr.forEach((item) => {
   keysArr.unshift(new Key(item.eventCode, item.rusChar,
@@ -660,6 +661,12 @@ keyboardDiv.addEventListener('mouseup', (event) => {
 //--------------------------------------------------------------
 document.addEventListener('keydown', (event) => {
   textarea.focus();
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false) {
+    isPressingOnShiftFizic = true;
+    capsLockToggle();
+    clearDOM();
+    insertKeysToDOM();
+  }
   for (const object of keysArr) {
     if (event.code === object.eventCode) {
       document.getElementById(event.code).classList.add('keyboard__key--active');
@@ -669,6 +676,12 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keyup', (event) => {
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    isPressingOnShiftFizic = false;
+    capsLockToggle();
+    clearDOM();
+    insertKeysToDOM();
+  }
   for (const object of keysArr) {
     if (event.code === object.eventCode) {
       document.getElementById(event.code).classList.remove('keyboard__key--active');
