@@ -6,7 +6,17 @@ class Key {
     this.rusCharShift = rusCharShift;
     this.engChar = engChar;
     this.engCharShift = engCharShift;
-    this.currentChar = engChar;
+    switch (localStorage.getItem('savedLetter')) {
+      case 'n': this.currentChar = this.engChar;
+        break;
+      case 'N': this.currentChar = this.engCharShift;
+        break;
+      case 'т': this.currentChar = this.rusChar;
+        break;
+      case 'Т': this.currentChar = this.rusCharShift;
+        break;
+      default: this.currentChar = this.engChar;
+    }
   }
 
   static insertTextareaAndKeyboardDivToDOM() {
@@ -685,8 +695,8 @@ document.addEventListener('keydown', (event) => {
     clearDOM();
     insertKeysToDOM();
   }
-  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false &&
-  event.ctrlKey) {
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false
+  && event.ctrlKey) {
     isPressingOnShiftFizic = true;
     languageToggle();
     clearDOM();
@@ -751,4 +761,8 @@ document.addEventListener('keydown', (event) => {
       }
     }
   }
+});
+
+window.addEventListener('unload', () => {
+  localStorage.setItem('savedLetter', keysArr[15].currentChar);
 });
