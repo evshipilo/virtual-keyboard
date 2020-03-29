@@ -31,6 +31,8 @@ class Key {
         || this.eventCode === 'CapsLock'
         || this.eventCode === 'ShiftLeft'
         || this.eventCode === 'ShiftRight'
+        || this.eventCode === 'ControlRight'
+        || this.eventCode === 'ControlLeft'
         || this.eventCode === 'Enter') return 'keyboard__key--wide';
     return '';
   }
@@ -452,20 +454,20 @@ const keysValuesArr = [
     engChar: 'Ctrl',
     engCharShift: 'Ctrl',
   },
-  {
-    eventCode: 'MetaLeft',
-    rusChar: 'Win',
-    rusCharShift: 'Win',
-    engChar: 'Win',
-    engCharShift: 'Win',
-  },
-  {
-    eventCode: 'Alt',
-    rusChar: 'Alt',
-    rusCharShift: 'Alt',
-    engChar: 'Alt',
-    engCharShift: 'Alt',
-  },
+  // {
+  //   eventCode: 'MetaLeft',
+  //   rusChar: 'Win',
+  //   rusCharShift: 'Win',
+  //   engChar: 'Win',
+  //   engCharShift: 'Win',
+  // },
+  // {
+  //   eventCode: 'Alt',
+  //   rusChar: 'Alt',
+  //   rusCharShift: 'Alt',
+  //   engChar: 'Alt',
+  //   engCharShift: 'Alt',
+  // },
   {
     eventCode: 'Space',
     rusChar: ' ',
@@ -512,8 +514,8 @@ const keysValuesArr = [
 const textarea = document.querySelector('textarea');
 const keysArr = [];
 let isPressingOnShift = false;
-let isPressingOnShiftFizic = false;
-let isPressingOnCapsLockFizic = false;
+let isPressingOnShiftPhysics = false;
+let isPressingOnCapsLockPhysics = false;
 
 keysValuesArr.forEach((item) => {
   keysArr.unshift(new Key(item.eventCode, item.rusChar,
@@ -682,22 +684,22 @@ document.addEventListener('keydown', (event) => {
     textarea.setSelectionRange(caretPosition + 4, caretPosition + 4);
     textarea.focus();
   }
-  if (event.code === 'CapsLock' && isPressingOnCapsLockFizic === false) {
+  if (event.code === 'CapsLock' && isPressingOnCapsLockPhysics === false) {
     // prevent sticking
-    isPressingOnCapsLockFizic = true;
+    isPressingOnCapsLockPhysics = true;
     capsLockToggle();
     clearDOM();
     insertKeysToDOM();
   }
-  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false && !event.ctrlKey) {
-    isPressingOnShiftFizic = true;
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftPhysics === false && !event.ctrlKey) {
+    isPressingOnShiftPhysics = true;
     capsLockToggle();
     clearDOM();
     insertKeysToDOM();
   }
-  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftPhysics === false
   && event.ctrlKey) {
-    isPressingOnShiftFizic = true;
+    isPressingOnShiftPhysics = true;
     languageToggle();
     clearDOM();
     insertKeysToDOM();
@@ -712,16 +714,16 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') {
-    isPressingOnCapsLockFizic = false;
+    isPressingOnCapsLockPhysics = false;
   }
   if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && !event.ctrlKey) {
-    isPressingOnShiftFizic = false;
+    isPressingOnShiftPhysics = false;
     capsLockToggle();
     clearDOM();
     insertKeysToDOM();
   }
   if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && event.ctrlKey) {
-    isPressingOnShiftFizic = false;
+    isPressingOnShiftPhysics = false;
   }
   for (const object of keysArr) {
     if (event.code === object.eventCode) {
@@ -764,5 +766,5 @@ document.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener('unload', () => {
-  localStorage.setItem('savedLetter', keysArr[15].currentChar);
+  localStorage.setItem('savedLetter', keysArr[13].currentChar);
 });
