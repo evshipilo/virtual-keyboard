@@ -659,10 +659,21 @@ keyboardDiv.addEventListener('mouseup', (event) => {
     }
   }
 });
-//--------------------------------------------------------------
+// end of mouse events----------------------------------------------------
 document.addEventListener('keydown', (event) => {
   textarea.focus();
+  if (event.code === 'Tab') {
+    event.preventDefault();
+    const textareaValueArr = (textarea.value).split('');
+    const caretPosition = textarea.selectionStart;
+    textareaValueArr.splice(caretPosition, 0, '    ');
+    textarea.value = textareaValueArr.join('');
+    textarea.focus();
+    textarea.setSelectionRange(caretPosition + 4, caretPosition + 4);
+    textarea.focus();
+  }
   if (event.code === 'CapsLock' && isPressingOnCapsLockFizic === false) {
+    // prevent sticking
     isPressingOnCapsLockFizic = true;
     capsLockToggle();
     clearDOM();
@@ -730,78 +741,4 @@ document.addEventListener('keydown', (event) => {
       }
     }
   }
-
-
-  //
-  //   if (event.code === 'ContextMenu') {
-  //     languageToggle();
-  //     clearDOM();
-  //     insertKeysToDOM();
-  //     break;
-  //   }
-  //   if (event.code === 'Tab') {
-  //     const textareaValueArr = (textarea.value).split('');
-  //     const caretPosition = textarea.selectionStart;
-  //     textareaValueArr.splice(caretPosition, 0, '    ');
-  //     textarea.value = textareaValueArr.join('');
-  //     textarea.focus();
-  //     textarea.setSelectionRange(caretPosition + 4, caretPosition + 4);
-  //     break;
-  //   }
-  //   if (event.target.id === 'Backspace') {
-  //     const textareaValueArr = (textarea.value).split('');
-  //     const caretPosition = textarea.selectionStart;
-  //     textareaValueArr.splice(caretPosition - 1, 1);
-  //     textarea.value = textareaValueArr.join('');
-  //     textarea.focus();
-  //     textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
-  //     break;
-  //   }
-  //   if (event.target.id === 'Enter') {
-  //     const textareaValueArr = (textarea.value).split('');
-  //     const caretPosition = textarea.selectionStart;
-  //     textareaValueArr.splice(caretPosition, 0, '\n');
-  //     textarea.value = textareaValueArr.join('');
-  //     textarea.focus();
-  //     textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
-  //     break;
-  //   }
-  //   if (event.target.id === 'ControlLeft'
-  //       || event.target.id === 'MetaLeft'
-  //       || event.target.id === 'ControlRight'
-  //       || event.target.id === 'ShiftLeft'
-  //       || event.target.id === 'ShiftRight'
-  //       || event.target.id === 'Alt') { break; }
-  //   if (event.target.id === 'ArrowUp') {
-  //     textarea.focus();
-  //     textarea.setSelectionRange(0, 0);
-  //     break;
-  //   }
-  //   if (event.target.id === 'ArrowDown') {
-  //     const textareaValueLength = (textarea.value).length;
-  //     textarea.focus();
-  //     textarea.setSelectionRange(textareaValueLength, textareaValueLength);
-  //     break;
-  //   }
-  //   if (event.target.id === 'ArrowLeft') {
-  //     const caretPosition = textarea.selectionStart;
-  //     textarea.focus();
-  //     textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
-  //     break;
-  //   }
-  //   if (event.target.id === 'ArrowRight') {
-  //     const caretPosition = textarea.selectionStart;
-  //     textarea.focus();
-  //     textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
-  //     break;
-  //   }
-  //   if (object.isEventTarget(event.target.id)) {
-  //     const textareaValueArr = (textarea.value).split('');
-  //     const caretPosition = textarea.selectionStart;
-  //     textareaValueArr.splice(caretPosition, 0, object.currentChar);
-  //     textarea.value = textareaValueArr.join('');
-  //     textarea.focus();
-  //     textarea.setSelectionRange(caretPosition + 1, caretPosition + 1);
-  //   }
-  // }
 });
