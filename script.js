@@ -679,9 +679,16 @@ document.addEventListener('keydown', (event) => {
     clearDOM();
     insertKeysToDOM();
   }
-  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false) {
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false && !event.ctrlKey) {
     isPressingOnShiftFizic = true;
     capsLockToggle();
+    clearDOM();
+    insertKeysToDOM();
+  }
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false &&
+  event.ctrlKey) {
+    isPressingOnShiftFizic = true;
+    languageToggle();
     clearDOM();
     insertKeysToDOM();
   }
@@ -697,11 +704,14 @@ document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') {
     isPressingOnCapsLockFizic = false;
   }
-  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && !event.ctrlKey) {
     isPressingOnShiftFizic = false;
     capsLockToggle();
     clearDOM();
     insertKeysToDOM();
+  }
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && event.ctrlKey) {
+    isPressingOnShiftFizic = false;
   }
   for (const object of keysArr) {
     if (event.code === object.eventCode) {
