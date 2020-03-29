@@ -503,6 +503,7 @@ const textarea = document.querySelector('textarea');
 const keysArr = [];
 let isPressingOnShift = false;
 let isPressingOnShiftFizic = false;
+let isPressingOnCapsLockFizic = false;
 
 keysValuesArr.forEach((item) => {
   keysArr.unshift(new Key(item.eventCode, item.rusChar,
@@ -661,6 +662,12 @@ keyboardDiv.addEventListener('mouseup', (event) => {
 //--------------------------------------------------------------
 document.addEventListener('keydown', (event) => {
   textarea.focus();
+  if (event.code === 'CapsLock' && isPressingOnCapsLockFizic === false) {
+    isPressingOnCapsLockFizic = true;
+    capsLockToggle();
+    clearDOM();
+    insertKeysToDOM();
+  }
   if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftFizic === false) {
     isPressingOnShiftFizic = true;
     capsLockToggle();
@@ -676,6 +683,9 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('keyup', (event) => {
+  if (event.code === 'CapsLock') {
+    isPressingOnCapsLockFizic = false;
+  }
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     isPressingOnShiftFizic = false;
     capsLockToggle();
@@ -691,7 +701,8 @@ document.addEventListener('keyup', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.code !== 'ContextMenu'
+  if (event.code !== 'CapsLock'
+      && event.code !== 'ContextMenu'
     && event.code !== 'Backspace'
     && event.code !== 'Enter'
     && event.code !== 'Tab'
@@ -707,12 +718,6 @@ document.addEventListener('keydown', (event) => {
     && event.code !== 'ArrowRight'
   ) {
     for (const object of keysArr) {
-      if (event.code === 'CapsLock') {
-        capsLockToggle();
-        clearDOM();
-        insertKeysToDOM();
-        break;
-      }
       if (event.code === object.eventCode) {
         event.preventDefault();
         const textareaValueArr = (textarea.value).split('');
