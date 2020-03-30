@@ -528,13 +528,6 @@ function insertKeysToDOM() {
   });
 }
 
-// function clearDOM() {
-//   const buttons = document.querySelectorAll('button');
-//   const brs = document.querySelectorAll('br');
-//   buttons.forEach((button) => { button.remove(); });
-//   brs.forEach((br) => { br.remove(); });
-// }
-
 insertKeysToDOM();
 
 function insertButtonsValues() {
@@ -576,7 +569,7 @@ function capsLockToggle() {
       case object.rusCharShift: object.currentChar = object.rusChar;
         break;
       default: return false;
-    }
+    } return false;
   });
 }
 
