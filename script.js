@@ -6,7 +6,7 @@ class Key {
     this.rusCharShift = rusCharShift;
     this.engChar = engChar;
     this.engCharShift = engCharShift;
-    // swich language
+    // switch language
     switch (localStorage.getItem('savedLetter')) {
       case 'q': this.currentChar = this.engChar;
         break;
@@ -558,7 +558,8 @@ function isServiceKey(event) {
 }
 
 function capsLockToggle() {
-  keysArr.forEach((object) => {
+  keysArr.forEach((obj) => {
+    const object = obj;
     switch (object.currentChar) {
       case object.engChar: object.currentChar = object.engCharShift;
         break;
@@ -574,7 +575,8 @@ function capsLockToggle() {
 }
 
 function languageToggle() {
-  keysArr.forEach((object) => {
+  keysArr.forEach((obj) => {
+    const object = obj;
     switch (object.currentChar) {
       case object.engChar: object.currentChar = object.rusChar;
         break;
