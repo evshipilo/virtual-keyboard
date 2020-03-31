@@ -697,7 +697,8 @@ document.addEventListener('keydown', (event) => {
     event.preventDefault();
     document.getElementById('Alt').classList.add('keyboard__key--active');
   }
-  for (const object of keysArr) {
+  for (let i = 0; i < keysArr.length; i += 1) {
+    const object = keysArr[i];
     if (event.code === object.eventCode) {
       document.getElementById(event.code).classList.add('keyboard__key--active');
       break;
@@ -720,7 +721,8 @@ document.addEventListener('keyup', (event) => {
   if (!event.altKey) {
     document.getElementById('Alt').classList.remove('keyboard__key--active');
   }
-  for (const object of keysArr) {
+  for (let i = 0; i < keysArr.length; i += 1) {
+    const object = keysArr[i];
     if (event.code === object.eventCode) {
       document.getElementById(event.code).classList.remove('keyboard__key--active');
       break;
@@ -745,7 +747,8 @@ document.addEventListener('keydown', (event) => {
     && event.code !== 'ArrowLeft'
     && event.code !== 'ArrowRight'
   ) {
-    for (const object of keysArr) {
+    for (let i = 0; i < keysArr.length; i += 1) {
+      const object = keysArr[i];
       if (event.code === object.eventCode) {
         event.preventDefault();
         const textareaValueArr = (textarea.value).split('');
