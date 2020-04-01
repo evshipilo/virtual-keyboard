@@ -515,6 +515,7 @@ const keysArr = [];
 let isPressingOnShift = false;
 let isPressingOnShiftPhysics = false;
 let isPressingOnCapsLockPhysics = false;
+let isPressingOnCtrlShiftPhysics = false;
 
 // create Array of objects Key Class type
 keysValuesArr.forEach((item) => {
@@ -689,6 +690,7 @@ document.addEventListener('keydown', (event) => {
   }
   if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnShiftPhysics === false
   && event.ctrlKey) {
+    isPressingOnCtrlShiftPhysics = true;
     isPressingOnShiftPhysics = true;
     languageToggle();
     insertButtonsValues();
@@ -710,13 +712,15 @@ document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') {
     isPressingOnCapsLockPhysics = false;
   }
-  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && !event.ctrlKey) {
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight')
+      && !isPressingOnCtrlShiftPhysics) {
     isPressingOnShiftPhysics = false;
     capsLockToggle();
     insertButtonsValues();
   }
-  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && event.ctrlKey) {
+  if ((event.code === 'ShiftLeft' || event.code === 'ShiftRight') && isPressingOnCtrlShiftPhysics) {
     isPressingOnShiftPhysics = false;
+    isPressingOnCtrlShiftPhysics = false;
   }
   if (!event.altKey) {
     document.getElementById('Alt').classList.remove('keyboard__key--active');
