@@ -454,11 +454,11 @@ const keysValuesArr = [
     engCharShift: 'Ctrl',
   },
   {
-    eventCode: 'MetaLeft',
-    rusChar: 'Win',
-    rusCharShift: 'Win',
-    engChar: 'Win',
-    engCharShift: 'Win',
+    eventCode: 'Delete',
+    rusChar: 'Del',
+    rusCharShift: 'Del',
+    engChar: 'Del',
+    engCharShift: 'Del',
   },
   {
     eventCode: 'Alt',
@@ -540,7 +540,7 @@ function insertButtonsValues() {
 function isServiceKey(event) {
   switch (event.target.id) {
     case 'ControlLeft': return true;
-    case 'MetaLeft': return true;
+    case 'Delete': return true;
     case 'ControlRight': return true;
     case 'ShiftLeft': return true;
     case 'ShiftRight': return true;
@@ -615,6 +615,13 @@ keyboardDiv.addEventListener('click', (event) => {
     textareaValueArr.splice(caretPosition - 1, 1);
     textarea.value = textareaValueArr.join('');
     textarea.setSelectionRange(caretPosition - 1, caretPosition - 1);
+  }
+  if (event.target.id === 'Delete') {
+    const textareaValueArr = (textarea.value).split('');
+    const caretPosition = textarea.selectionStart;
+    textareaValueArr.splice(caretPosition, 1);
+    textarea.value = textareaValueArr.join('');
+    textarea.setSelectionRange(caretPosition, caretPosition);
   }
   if (event.target.id === 'Enter') {
     const textareaValueArr = (textarea.value).split('');
@@ -744,7 +751,7 @@ document.addEventListener('keydown', (event) => {
     && event.code !== 'ControlRight'
     && event.code !== 'ShiftLeft'
     && event.code !== 'ShiftRight'
-    && event.code !== 'MetaLeft'
+    && event.code !== 'Delete'
     && event.code !== 'Alt'
     && event.code !== 'ArrowDown'
     && event.code !== 'ArrowUp'
