@@ -22,7 +22,8 @@ class Key {
 
   static insertTextareaAndKeyboardDivToDOM() {
     const body = document.querySelector('body');
-    body.insertAdjacentHTML('afterbegin', `<textarea name="text" id="text">
+    body.insertAdjacentHTML('afterbegin', `<textarea name="text" id="text" 
+placeholder="Переключение между языками Ctrl+Shift (физическая), eng/ру (виртуальня)">
 </textarea><div class="keyboard"><div class="keyboard__keys"></div></div>`);
   }
 
